@@ -92,6 +92,10 @@
   .today-box{background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--radius);padding:18px 20px}
   .today-box a{font-weight:700}
   .today-box .btn{display:inline-block;margin:6px 8px 0 0;padding:12px 18px;min-height:48px;background:var(--accent);color:var(--accent-ink);border-radius:10px;text-decoration:none;font-weight:700}
+  /* Mode jump links: plain <a> links, no JS needed — works in QQ Mail / WeChat in-app browsers */
+  .mode-links{display:grid;gap:10px;margin-top:12px}
+  .mode-links a{display:block;background:var(--surface);border:2px solid var(--accent);border-radius:12px;padding:16px 18px;min-height:56px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.05rem}
+  .mode-links a span{display:block;font-weight:400;font-size:.9rem;color:var(--muted)}
 
   /* Tables */
   .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
@@ -243,7 +247,13 @@
       <h2>每天具体学什么</h2>
       <p>点一种日子，看分钟级拆分。三个版本学的内容完全一样，只是量不同——所以哪天降级都不亏进度。</p>
     </div>
-    <div class="planner" data-active="std">
+    <p class="small" style="margin:0 0 4px">点不动下面那个切换？直接点这里跳转，一样能看，不用脚本：</p>
+    <div class="mode-links">
+      <a href="modes/min.html">保底日 · 15–20 分钟 →<span>状态差、没时间、累：只做复习 + 精听 1 小段，不断天就行</span></a>
+      <a href="modes/std.html">标准日 · 60 分钟 →<span>默认档：单词 20 分钟 + 精听 20 分钟 + 仔细阅读 20 分钟</span></a>
+      <a href="modes/plus.html">加餐日 · 约 2 小时 →<span>仅周末、状态特别好时：标准日 + 作文 1 篇 + 翻译 1 段</span></a>
+    </div>
+    <div class="planner" data-active="std" style="margin-top:16px">
       <input type="radio" name="daymode" id="mode-min" value="min">
       <input type="radio" name="daymode" id="mode-std" value="std" checked>
       <input type="radio" name="daymode" id="mode-plus" value="plus">
