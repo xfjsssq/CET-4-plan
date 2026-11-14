@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>CET4 备考计划</title>
+<style>
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  *{box-sizing:border-box}
+  :root{
+    --bg:#f7f5f0; --surface:#ffffff; --surface2:#efece4; --ink:#1c2420; --muted:#5b665f;
+    --line:#ddd8cb; --accent:#1f6b4a; --accent-ink:#ffffff; --accent-soft:#e3efe7;
+    --amber:#9a6b12; --amber-soft:#f7ecd2; --red:#9c3d2e; --red-soft:#f9e6e1;
+    --blue:#2f5d8a; --blue-soft:#e4ecf5; --radius:14px;
+    --font:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141816; --surface:#1e2421; --surface2:#262d29; --ink:#ece9e0; --muted:#a8b0a8;
+      --line:#3a423c; --accent:#4db380; --accent-ink:#0d1f16; --accent-soft:#223a2d;
+      --amber:#e0b45a; --amber-soft:#3d3319; --red:#e08a76; --red-soft:#3d2620;
+      --blue:#8db4d9; --blue-soft:#25374a;
+    }
+  }
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;font-size:16px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 18px 64px}
+  a{color:var(--accent);text-underline-offset:3px}
+  h1,h2,h3{line-height:1.3;margin:0}
+  h2{font-size:1.45rem;margin-bottom:6px}
+  h3{font-size:1.05rem}
+  p{margin:0 0 10px}
+  .muted{color:var(--muted)} .small{font-size:.86rem}
+  section{margin-top:44px}
+  .sec-head{margin-bottom:16px}
+  .sec-head p{color:var(--muted);max-width:720px}
+
+  /* Hero */
+  .hero{padding:34px 0 8px}
+  .hero h1{font-family:var(--serif);font-size:2.15rem;font-weight:800;letter-spacing:.01em;max-width:640px}
+  .hero .lead{margin-top:12px;font-size:1.06rem;color:var(--muted);max-width:680px}
+  .hero .lead strong{color:var(--ink)}
+  .fact-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+  .fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+  .fact b{display:block;font-size:1.35rem;line-height:1.2}
+  .fact span{font-size:.84rem;color:var(--muted)}
+  .verdict{margin-top:14px;background:var(--accent-soft);border-radius:var(--radius);padding:16px 18px}
+  .verdict p{margin:0}
+  @media(max-width:720px){.fact-row{grid-template-columns:1fr 1fr}.hero h1{font-size:1.7rem}}
+
+  /* Mode switcher */
+  .modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:820px){.modes{grid-template-columns:1fr}}
+  .mode-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .mode-card.hero-mode{border:2px solid var(--accent)}
+  .mode-tag{display:inline-block;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+  .tag-min{background:var(--amber-soft);color:var(--amber)}
+  .tag-std{background:var(--accent-soft);color:var(--accent)}
+  .tag-plus{background:var(--blue-soft);color:var(--blue)}
+  .mode-card h3{font-size:1.15rem;margin-bottom:4px}
+  .mode-card .mins{font-size:1.6rem;font-weight:800;line-height:1.2}
+  .mode-card ul{margin:10px 0 0;padding-left:18px}
+  .mode-card li{margin:4px 0}
+  .rule-box{margin-top:12px;background:var(--surface);border:1px dashed var(--accent);border-radius:var(--radius);padding:16px 18px}
+  .rule-box h3{margin-bottom:6px}
+  .streak{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+  @media(max-width:720px){.streak{grid-template-columns:1fr}}
+  .streak div{background:var(--surface2);border-radius:10px;padding:12px 14px}
+  .streak b{display:block;margin-bottom:2px}
+
+  /* Interactive day planner */
+  .planner{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .seg{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
+  .seg button{flex:1;min-width:130px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .blocks{display:grid;gap:8px}
+  .block{display:flex;gap:12px;align-items:baseline;background:var(--surface2);border-radius:10px;padding:11px 14px}
+  .block .t{font-weight:800;white-space:nowrap;min-width:64px}
+  .block .what b{display:block}
+  .planner-note{margin-top:12px}
+
+  /* Tables */
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:.94rem}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--surface2);font-weight:700;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bar{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;min-width:90px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .callout{border-radius:var(--radius);padding:14px 16px;margin-top:12px}
+  .callout.amber{background:var(--amber-soft)} .callout.red{background:var(--red-soft)}
+  .callout p{margin:0}
+
+  /* Phases */
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:820px){.phases{grid-template-columns:1fr}}
+  .phase{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .phase .when{font-size:.82rem;font-weight:700;color:var(--accent);letter-spacing:.02em}
+  .phase h3{margin:4px 0 8px;font-size:1.12rem}
+  .phase ul{margin:8px 0 0;padding-left:18px}
+  .phase li{margin:5px 0}
+  .mile{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:.9rem}
+  .week-rhythm{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+
+  /* Method cards */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card h3{margin-bottom:8px}
+  .card ol,.card ul{margin:6px 0 0;padding-left:20px}
+  .card li{margin:5px 0}
+  .steps{counter-reset:step;list-style:none;padding-left:0!important}
+  .steps li{position:relative;padding-left:34px;margin:10px 0}
+  .steps li::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .priority{list-style:none;padding:0;margin:0;counter-reset:pri}
+  .priority li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .priority li:last-child{border-bottom:none}
+  .priority li::before{counter-increment:pri;content:counter(pri);flex:none;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-weight:800;display:flex;align-items:center;justify-content:center}
+  .checklist{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{padding:7px 0 7px 28px;position:relative;border-bottom:1px dashed var(--line)}
+  .checklist li:last-child{border-bottom:none}
+  .checklist li::before{content:"✓";position:absolute;left:2px;color:var(--accent);font-weight:800}
+  .avoid li::before{content:"✕";color:var(--red)}
+  .pill{display:inline-block;background:var(--surface2);border-radius:999px;padding:2px 10px;font-size:.82rem;margin:2px 4px 2px 0}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px}
+  footer li{margin:4px 0;word-break:break-all}
+  @media(max-width:640px){
+    table{min-width:0;font-size:.86rem}
+    th,td{padding:9px 10px}
+    th{white-space:normal}
+    td.num,th.num{white-space:normal}
+    .bar{min-width:44px}
+  }
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <h1>四级备考计划：你只差 30 分，差在坚持和薄弱项</h1>
+    <p class="lead">先把定位说清楚：你上次四级考了 <strong>390 多分，离 425 只差约 30 分</strong>——这不是基础差、更不是从零重学。390 多分说明常规题你能拿分，丢分丢在两处：<strong>一是学一阵、断一阵，状态不稳定；二是几个薄弱项一直没补。</strong>所以这份计划只做两件事：用「不断天」的节奏把状态稳住，用剩下的时间专攻最容易补回 30 分的三项——<strong>听力精听、仔细阅读、写作框架</strong>（听力 + 阅读占总分 70%，写作是提分最快的一项）。</p>
+    <div class="fact-row">
+      <div class="fact"><b>390 多分</b><span>上次四级成绩 · 离 425 参考线只差约 30 分——目标是补齐薄弱项，不是推倒重来</span></div>
+      <div class="fact"><b>2027 年 6 月</b><span>目标考试 · 具体日期尚未公布，预计 6 月第二个周六，2027 年春季以学校 / 教育部考试中心通知为准</span></div>
+      <div class="fact"><b>约 210 天</b><span>从 2026 年 11 月中旬算起，约 30 周——补 30 分，时间绰绰有余</span></div>
+      <div class="fact"><b>1,000–1,500</b><span>词汇缺口仍在：高中约 3,500 词 → 四级大纲约 4,500 词，这是薄弱项的根源之一</span></div>
+    </div>
+    <div class="verdict">
+      <p><strong>这页怎么用（重要）：</strong>你在国内、只有科学上网时才能打开 Muse，推送提醒不一定收得到——所以<strong>不要等任何推送</strong>。这份计划做成了打开就能自用的形式：每天背哪类词、听哪篇、读哪篇都写死了（见下方逐日任务表），你上线后直接打开这一页，照着当天的做就行，不用再想今天学什么。节奏仍然是：<strong>每天最多 1 小时，状态差就 15–20 分钟保底，宁可少做，也不许出现 0 分钟的一天</strong>——上次的 30 分，很大一部分就是断档断掉的。</p>
+    </div>
+  </header>
+
+  <!-- ============ ANTI-LAZINESS SYSTEM ============ -->
+  <section id="system">
+    <div class="sec-head">
+      <h2>防断档系统：三种日子，量力切换</h2>
+      <p>不再要求「每天 2 小时」。每一天开始时只问自己一句：今天是哪种日子？选最低能完成的那种——做完保底日，也算赢。</p>
+    </div>
+    <div class="modes">
+      <div class="mode-card">
+        <span class="mode-tag tag-min">状态差 · 没时间 · 累</span>
+        <h3>保底日</h3>
+        <div class="mins">15–20 分钟</div>
+        <ul>
+          <li><b>复习到期单词</b>（App 里今天到期的，全清掉，不学新词）——约 10 分钟</li>
+          <li><b>精听 1 小段</b>：真题听力听 1 篇短文 / 一段对话，做题 + 对原文——约 8 分钟</li>
+          <li>做完就停。今天的任务只有一个：<b>不断天</b></li>
+        </ul>
+      </div>
+      <div class="mode-card hero-mode">
+        <span class="mode-tag tag-std">默认选项 · 一周 4–5 天</span>
+        <h3>标准日</h3>
+        <div class="mins">60 分钟封顶</div>
+        <ul>
+          <li>单词 20 分钟 + 精听 20 分钟 + 仔细阅读 20 分钟（下方有详细拆分）</li>
+          <li>写作 / 翻译不占工作日，挪到周六一次做完</li>
+          <li>到 60 分钟立刻停，哪怕状态正好——留一点「没学够」的感觉给明天</li>
+        </ul>
+      </div>
+      <div class="mode-card">
+        <span class="mode-tag tag-plus">仅周末 · 状态特别好时</span>
+        <h3>加餐日</h3>
+        <div class="mins">约 2 小时</div>
+        <ul>
+          <li>标准日 60 分钟 + 1 篇作文或 1 段翻译 + 错题重做</li>
+          <li>冲刺阶段（最后 8 周）改为一套完整真题（125 分钟）</li>
+          <li><b>不是义务。</b>没有加餐的一周，也是合格的一周</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <h3>断档补救规则（最重要的一条）</h3>
+      <p>真断了一天，不惩罚、不补课，按这个来：</p>
+      <div class="streak">
+        <div><b>断 1 天</b>第二天只做保底量（15–20 分钟），把单词欠账分 2–3 天慢慢还，<b>绝不补双倍</b>——补双倍只会让你更不想开始，然后断得更久。</div>
+        <div><b>连断 2–3 天</b>重启日只做一件事：打开 App 把到期单词清零。清完就算重启成功，第二天恢复保底日，第三天再回标准日。</div>
+        <div><b>断了一周以上</b>不回头补任何内容，直接从「今天」继续当前阶段。欠的真题套数在冲刺期自然用不完，少做两套不影响结果，放弃计划才会。</div>
+      </div>
+    </div>
+
+    <div class="week-rhythm">
+      <h3>一周节奏（固定下来，不用每天纠结）</h3>
+      <p style="margin-top:6px"><span class="pill">周一–周五：标准日 60 分钟（状态差就降保底）</span><span class="pill">周六：加餐日——作文 1 篇 + 翻译 1 段（或一套真题）</span><span class="pill">周日：只复习，不学新内容</span></p>
+      <p class="small muted" style="margin:6px 0 0">周日固定为复习日：过一遍本周错题本和生词本、订下周的量，不背新词、不做新题。这一天是计划自带的「刹车」，专门防止学猛了之后崩盘。</p>
+    </div>
+  </section>
+
+  <!-- ============ DAILY PLANNER ============ -->
+  <section id="planner">
+    <div class="sec-head">
+      <h2>每天具体学什么</h2>
+      <p>点一种日子，看分钟级拆分。三个版本学的内容完全一样，只是量不同——所以哪天降级都不亏进度。</p>
+    </div>
+    <div class="planner">
+      <div class="seg" role="group" aria-label="选择日子类型">
+        <button type="button" data-mode="min" aria-pressed="false">保底日 · 15–20 分钟</button>
+        <button type="button" data-mode="std" aria-pressed="true">标准日 · 60 分钟</button>
+        <button type="button" data-mode="plus" aria-pressed="false">加餐日 · 约 2 小时</button>
+      </div>
+      <div class="blocks" id="blocks"></div>
+      <p class="planner-note small muted" id="plannerNote"></p>
+    </div>
+  </section>
+
+  <!-- ============ DAILY TASKS ============ -->
+  <section id="daily">
+    <div class="sec-head">
+      <h2>逐日任务表：打开就做，不用想</h2>
+      <p>下面是第一阶段（第 1–10 周）每个工作日的固定菜单——背哪类词、听哪种题型、读什么，都定好了。真题材料按从旧到新的顺序往后用（先用 2016–2020 年的卷子分项练，近三年的留到冲刺期做整卷）。第 2 周起把表格里的篇目顺延到下一套真题即可，结构不变。</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>日子</th><th>单词（20 分钟）</th><th>听力精听（20 分钟）</th><th>仔细阅读（20 分钟）</th></tr></thead>
+        <tbody>
+          <tr><td><b>周一</b></td><td>新词 30–40 个：<b>校园 / 教育类</b>高频词 + 全部到期复习</td><td>短篇新闻 1 组（3 篇连听，按精听三步走）</td><td>仔细阅读 1 篇：教育 / 校园话题</td></tr>
+          <tr><td><b>周二</b></td><td>新词 30–40 个：<b>科技 / 互联网类</b>高频词 + 到期复习</td><td>长对话 1 篇（逐句听写难句）</td><td>仔细阅读 1 篇：科技话题</td></tr>
+          <tr><td><b>周三</b></td><td>新词 30–40 个：<b>社会 / 就业类</b>高频词 + 到期复习</td><td>听力篇章 1 篇（这是 14.2 分/题的重头，认真对原文）</td><td>仔细阅读 1 篇：社会话题</td></tr>
+          <tr><td><b>周四</b></td><td>新词 30–40 个：<b>环保 / 健康类</b>高频词 + 到期复习</td><td>长对话 1 篇</td><td>仔细阅读 1 篇：环保 / 健康话题</td></tr>
+          <tr><td><b>周五</b></td><td>新词 30–40 个：<b>文化 / 传统类</b>高频词（顺便喂给翻译）+ 到期复习</td><td>听力篇章 1 篇</td><td>仔细阅读 1 篇：文化话题</td></tr>
+          <tr><td><b>周六</b></td><td colspan="3">加餐日：先完成保底量（复习单词 + 精听 1 小段），再做产出——<b>第 1–8 周：长篇匹配 1 篇 + 选词填空 1 篇</b>（认识题型即可）；<b>第 9 周起：作文 1 篇（计时 25 分钟 + 自查 5 分钟）</b>。第 1 周的周六例外：9:00 严格计时做 1 套完整真题当诊断卷，记下每个部分的正确率和用时——390 多分的总分你已经知道了，这次是为了看清 30 分具体丢在哪个部分</td></tr>
+          <tr><td><b>周日</b></td><td colspan="3"><b>只复习，不学新内容：</b>过一遍本周生词本和错题（按五类归因），把没记住的词在 App 里标星；用时 20–40 分钟，做完就休息</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout amber">
+      <p><b>降级规则同样写死：</b>哪天状态差，整行换成保底日——只清到期单词（不学新词）+ 精听当天题型的第 1 篇 / 第 1 段（只做题 + 对原文，不逐句听写），全程约 15–20 分钟。跳过的篇目不顺延、不补做，第二天直接按表走当天的——菜单是按周循环设计的，跳过一天不会乱套。</p>
+    </div>
+    <p class="small muted" style="margin-top:10px">进入第二阶段（第 11–22 周）后菜单微调：单词改为只复习 + 真题生词，周一至周五按阶段重点倾斜（11–13 周听力加量、14–16 周阅读加量、17–19 周周中加 1 次翻译），周六固定作文 + 翻译；第三阶段（第 23–30 周）周六、周三各做 1 套完整真题，其余日子只维护单词和精听。具体安排见下方三阶段总表。</p>
+  </section>
+
+  <!-- ============ EXAM STRUCTURE ============ -->
+  <section id="structure">
+    <div class="sec-head">
+      <h2>先看清考试：710 分花在哪</h2>
+      <p>总分 710，成绩单按常模换算，并不是做对多少题就直接加多少分。下表分值是按权重换算的规划参考（权重 × 710）。题目顺序固定、各部分时间不能挪用：先写作文 30 分钟，再听力（只放一遍），然后收答题卡 1，最后才是阅读和翻译。口语（CET-SET4）是单独的可选考试，不计入这 710 分。</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>部分</th><th>题型</th><th class="num">题量</th><th>权重</th><th class="num">换算分</th><th class="num">时间</th></tr></thead>
+        <tbody>
+          <tr><td><b>写作</b></td><td>短文写作 120–180 词*</td><td class="num">1</td><td><div class="bar"><i style="width:15%"></i></div>15%</td><td class="num">106.5</td><td class="num">30 分钟</td></tr>
+          <tr><td><b>听力</b></td><td>短篇新闻 7 题 + 长对话 8 题 + 听力篇章 10 题</td><td class="num">25</td><td><div class="bar"><i style="width:35%"></i></div>35%</td><td class="num">248.5</td><td class="num">25 分钟</td></tr>
+          <tr><td><b>阅读</b></td><td>选词填空 10 题 + 长篇匹配 10 题 + 仔细阅读 10 题</td><td class="num">30</td><td><div class="bar"><i style="width:35%"></i></div>35%</td><td class="num">248.5</td><td class="num">40 分钟</td></tr>
+          <tr><td><b>翻译</b></td><td>汉译英段落，140–160 个汉字</td><td class="num">1</td><td><div class="bar"><i style="width:15%"></i></div>15%</td><td class="num">106.5</td><td class="num">30 分钟</td></tr>
+          <tr><td colspan="2"><b>合计</b></td><td class="num"><b>57</b></td><td><b>100%</b></td><td class="num"><b>710</b></td><td class="num"><b>125 分钟</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:8px">* 作文词数有来源分歧：多数指南说 120–180 词，cet4.top 说 120–150 词。写 130–160 词，两个口径都安全。</p>
+    <div class="callout amber">
+      <p><b>每道题的「价格」差 4 倍，这决定了做题顺序：</b>仔细阅读和听力篇章约 <b>14.2 分/题</b>；长篇匹配、新闻、长对话约 7.1 分/题；选词填空只有约 <b>3.55 分/题</b>。粗略地说，各部分都拿到约 60%（听力 ≈149/249、阅读 ≈149/249、写作 ≈64、翻译 ≈64）就接近 425——但因为是常模换算，这只是规划参考，不是精确公式。</p>
+    </div>
+  </section>
+
+  <!-- ============ PHASES ============ -->
+  <section id="phases">
+    <div class="sec-head">
+      <h2>三阶段 · 30 周总表</h2>
+      <p>阶段按周推进，不按「学完多少」推进——某周只做了一半保底日，也照常进入下一周。进度感来自周数走完，不来自每天满格。如果开局晚于 11 月中旬，压缩第一阶段，绝不压缩第三阶段。</p>
+    </div>
+    <div class="phases">
+      <div class="phase">
+        <div class="when">第 1–10 周 · 打地基</div>
+        <h3>词汇 + 句子 + 习惯</h3>
+        <ul>
+          <li><b>第 1 周先做 1 套真题诊断</b>（严格计时），这是你唯一的真实起点，别信任何「高考分换算四级分」的说法——那些换算没有官方依据、来源互相矛盾</li>
+          <li>单词每天 30–40 个新词（保底日只复习不学新词），第 7–8 周学完约 1,500 个新词</li>
+          <li>语法一周一个主题：句子成分、五种基本句型、三大从句、时态、被动与非谓语——每个主题都要套到 3–5 个真题句子上</li>
+          <li>听力每天 1 篇精听；阅读每天 1 篇仔细阅读，先不限时</li>
+          <li>第 9–10 周才开始碰作文格式和翻译</li>
+        </ul>
+        <div class="mile"><b>阶段验收（第 10 周末）：</b>再做 1 套诊断卷，听力和仔细阅读正确率应有肉眼可见的提升；生词本累计约 1,000 词进入「已掌握」。</div>
+      </div>
+      <div class="phase">
+        <div class="when">第 11–22 周 · 分项突破</div>
+        <h3>把地基变成题感</h3>
+        <ul>
+          <li>第 11–13 周主攻听力，14–16 周主攻阅读，17–19 周主攻写作 + 翻译，20–22 周混合</li>
+          <li>单词停止大批量上新，只复习 + 收真题生词（每天约 15 分钟）</li>
+          <li>周六固定产出：作文 1–2 篇（真题题目、计时）、翻译 2 段</li>
+          <li>真题先按题型拆着练（用 2016–2023 年的卷子），第 20 周起每周六做 1 套完整计时卷</li>
+        </ul>
+        <div class="mile"><b>阶段验收（第 22 周末）：</b>整卷分数距 425 不超过约 30 分，或至少两个部分稳定超过 60%。</div>
+      </div>
+      <div class="phase">
+        <div class="when">第 23–30 周 · 冲刺</div>
+        <h3>按考试节奏收尾</h3>
+        <ul>
+          <li>每周 2 套完整真题，<b>早 9:00 开考</b>，练上午的考试生物钟</li>
+          <li>单词和听力只做维护：复习到期词 + 每天 1 篇精听，不再上新</li>
+          <li>周六作文 1 篇 + 翻译 2 段，全部计时 + 按清单自查</li>
+          <li>最后一周（第 30 周）不做新卷：重做错题本、重读生词本，周初做最后 1 套整卷，然后休息、把作息调到 9 点开考</li>
+        </ul>
+        <div class="mile"><b>总量参考：</b>210 天做完 15–20 套真题足够。质量（每套按「三遍法」复盘）远比数量重要。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VOCAB + LISTENING ============ -->
+  <section id="core">
+    <div class="sec-head">
+      <h2>两个核心方法</h2>
+      <p>整份计划里证据最硬的，就是下面两件事。其他都可以商量，这两件不要打折。</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>词汇：间隔复习（SRS）+ 在句子里学</h3>
+        <p>间隔重复是学习科学里复现性最强的结论之一：Cepeda 等（2006）对 317 个实验的荟萃分析显示分散练习比集中突击的长时记忆高约 10–30%；Karpicke &amp; Roediger（2008）发现「先回忆、再看答案」的主动提取，一周后记忆量比反复阅读高约 50%。（数字来自二手综述，方向可信、精确值仅供参考；一个词通常需要遇到 5–16 次才进长时记忆。）</p>
+        <ol>
+          <li><b>每天 30–40 个新词封顶。</b>有些指南推荐 60–120 个，别跟：每个新词会产生 3–5 次未来复习，80 个/天两周后每天复习量破 200，这正是「背了忘、忘了背」最后弃坑的死法</li>
+          <li><b>复习节奏</b>交给 App 算法排（常见节奏：1 天 → 3 天 → 7 天 → 15 天）。铁律：每次复习先自己回忆，再翻答案，不许直接读</li>
+          <li><b>先学发音再学意思。</b>不会读的词，听力里永远听不出来</li>
+          <li><b>从高频词开始，不要按字母 A 背到 Z。</b>顺序：真题高频词 → 大纲词</li>
+          <li><b>建一本「真题生词本」</b>：词 + 它出现的原句 + 它的同义替换。阅读和听力里错的词全收进来</li>
+          <li>词根词缀（spect、dict、port、-tion、un-/dis-）当辅助猜词用，不能替代复习</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>听力：精听为主，泛听只是背景音</h3>
+        <p>听力占 35%，且只放一遍、放完立刻收卡，是高中生最吃亏的部分。研究方向一致：精听（逐句吃透）是主力，泛听（磨耳朵）只能当维护。听写有一项小型对照研究支持（Kiany &amp; Shiramiry, 2002：听写组进步 13.9 分 vs 对照组 6.0 分，样本小、年份早，方向性参考）；跟读（shadowing）对低水平学习者的「声音解码」帮助最明显（Hamada, 2016），每次 10–15 分钟、同一段读 5–6 遍即可——但跟读不教新词，必须先认识词。</p>
+        <ol class="steps">
+          <li><b>按考试节奏听一遍</b>：不暂停、不倒带，边听边涂卡，拿不准的做记号</li>
+          <li><b>逐句听写 / 跟读</b>：一小段一小段回放，写下听到的，或慢半拍跟读出声。每处没听懂都要定性：生词？连读弱读？还是词都听见了但逻辑没跟上？</li>
+          <li><b>对原文复盘</b>：标出同义替换、转折否定词（but、however、actually、hardly）、数字日期、谁说的话；生词进生词本（带原句）</li>
+        </ol>
+        <p style="margin-top:10px"><b>材料只用真题音频 + 原文</b>（语速、话题、出题方式都和考试一致），B 站有 2015–2025 年真题听力合集（免费、带原文）。泛听每天 15 分钟 VOA/BBC 慢速新闻即可；看美剧英剧、听歌不能替代精听。练的时候不许反复倒带——那是在练一个考试里不存在的技能。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ READING ============ -->
+  <section id="reading">
+    <div class="sec-head">
+      <h2>阅读：按「分值」排序做题，不按试卷顺序</h2>
+      <p>阅读 30 题只有 40 分钟，约 80 秒一题。这个阶段先练准、再练快：速度来自词汇自动化和「定位法」，不来自速读技巧。没有证据支持市面上的速读课程，不要买。</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>做题顺序</th><th class="num">每题分值</th><th class="num">建议用时</th><th>方法</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. 仔细阅读</b>（20%）</td><td class="num">≈14.2 分</td><td class="num">18–20 分钟</td><td>先看题干、划关键词（人名、数字、因果词），回原文定位，只读定位句前后各一句。<b>正确选项几乎都是原文的同义改写；和原文一字不差的选项往往是陷阱。</b>题目顺序基本跟原文顺序走。长难句先抓主干（主谓宾），修饰成分先放一边</td></tr>
+          <tr><td><b>2. 长篇匹配</b>（10%）</td><td class="num">≈7.1 分</td><td class="num">10–14 分钟</td><td>先读完 10 个题干划关键词，专有名词和数字最好扫。只扫每段首尾句和转折处，不需要读懂全文；同一词出现不等于答案，必须同义对上。卡住就走，封顶约 12 分钟</td></tr>
+          <tr><td><b>3. 选词填空</b>（5%）</td><td class="num">≈3.55 分</td><td class="num">5–8 分钟硬上限</td><td>先把 15 个选项按词性分类，再读文填空，先填有把握的、剩下排除法。它一整篇的分值还不如一道仔细阅读，时间不够就猜，绝不能挤占仔细阅读</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout red">
+      <p><b>这个水平最常见的阅读错法不是「读得慢」，而是「定位到了、词不认识」</b>——定位句里的关键词或它的同义替换不认识。所以阅读错题的第一处理永远是：把那个词收进真题生词本。脱离词汇硬刷阅读，刷到后期必然平台期。</p>
+    </div>
+  </section>
+
+  <!-- ============ WRITING + TRANSLATION ============ -->
+  <section id="writing">
+    <div class="sec-head">
+      <h2>写作与翻译：搭框架，不背整篇范文</h2>
+      <p>两部分合计 30%，是提分最快的部分——但方法必须对。新东方 2026 年的指南指出阅卷已明显「反模板化」：整段套话（"With the development of society…" 之类）会被直接压到低档；整篇背下来的范文套不上题目更惨。你要背的是<b>结构 + 功能句零件</b>，内容自己往里装。对基础弱的人这反而是好消息：结构清楚、语法正确、每点有例子、130–160 词的朴素作文，就能稳拿中档分。</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>写作框架（三段式）</h3>
+        <ul>
+          <li><b>第 1 段（2–3 句）</b>：重述背景 + 明确亮出观点</li>
+          <li><b>第 2 段（6–8 句）</b>：2–3 个理由，每个理由配一句解释或一个具体例子，用 firstly / moreover / in contrast 衔接</li>
+          <li><b>第 3 段（2–3 句）</b>：重申观点 + 建议或展望，不引入新论点</li>
+          <li><b>功能句每类只备 1–2 句</b>：开头、表态、举例、让步、结尾各一两句，理解了再用</li>
+          <li><b>句型只练熟 5 类</b>：定语从句、状语从句、非谓语、被动语态、It is… 句型——每段有一个从句就够了</li>
+          <li><b>高频话题</b>：校园生活、环保、科技（网络 / AI / 手机）、社会热点、文化遗产、教育；书信 / 通知 / 邀请函要单独记格式，格式错比句子简单扣分更狠</li>
+          <li>拆解 5 篇范文的「零件」可以，整篇背诵不行</li>
+        </ul>
+        <h3 style="margin-top:16px">交卷前 5 分钟自查清单</h3>
+        <ul class="checklist">
+          <li>题目问的每一问都答了吗？</li>
+          <li>第 1 段有没有明确表态？</li>
+          <li>每段有没有主题句？</li>
+          <li>时态全篇一致吗？主谓一致吗？</li>
+          <li>单复数、拼写过了一遍吗？</li>
+          <li>词数在 120–180 之间吗？</li>
+        </ul>
+        <p class="small muted" style="margin-top:8px">扣分最狠的三样：跑题、严重语法错误、字数不够。常见小错：中式语序、一句话两个谓语、时态混用、discuss about / listen music 这类搭配错、句子写太长写崩。</p>
+      </div>
+      <div class="card">
+        <h3>翻译四步法</h3>
+        <ol class="steps">
+          <li><b>通读全段，按逗号和意思把长句切开</b></li>
+          <li><b>每句先搭主干</b>：主语—谓语—宾语先立住</li>
+          <li><b>再挂修饰</b>：长定语改成定语从句或后置介词短语</li>
+          <li><b>回头检查</b>：时态、单复数、冠词、拼写</li>
+        </ol>
+        <ul>
+          <li><b>话题高度可预测</b>：中国历史文化、地理名胜、节日习俗、饮食、教育、科技与社会发展（高铁、5G、春节、剪纸、长城……）。先把约 50 个文化词的标准译名记熟</li>
+          <li>中文常省主语：补 we / it / there be，或改被动——客观和文化类描述里被动语态出现率很高（「人们普遍认为」→ It is widely believed that…）</li>
+          <li>四字成语不逐字译，译核心意思；<b>遇到不会的词，用简单话绕过去，绝不留空</b>（「水灯」不会说 → a lantern that floats on water）</li>
+          <li>练法：每周 2 段真题翻译，计时 30 分钟，写完逐句对照参考译文，记下「哪个词被我绕过去了、哪个结构没想到」</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAST PAPERS ============ -->
+  <section id="papers">
+    <div class="sec-head">
+      <h2>真题的用法：三遍法 + 错题归类</h2>
+      <p>四级的题型、话题、难度多年高度稳定，所以只用真题，不做商业模拟卷——模拟卷质量普遍低一档。每套卷子按三遍走完，顶做三套新卷。</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>三遍法（每套约 3 小时，分散在一周里）</h3>
+        <ol class="steps">
+          <li><b>整卷计时</b>：125 分钟，早 9:00 开始，不查词、不暂停。每部分实际用时记下来——这张时间表比分数更有用</li>
+          <li><b>按题型复盘</b>：把几套卷的同类题放一起看（比如 3 套的仔细阅读），摸清出题人的同义替换和干扰项套路。每个错题必须写清「为什么错」，不能只抄正确答案</li>
+          <li><b>5–7 天后重做错题</b>：只做当时错的。独立做对才算真会；又错，说明上次的「看懂解析」是假懂，回到原文重新定位</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>错题不许写「粗心」，必须归到这五类</h3>
+        <div class="table-scroll" style="border:none">
+          <table style="min-width:0">
+            <tbody>
+              <tr><td><b>词不认识</b></td><td>定位对了，关键词或同义替换不懂 → 进生词本（带原句）</td></tr>
+              <tr><td><b>定位错</b></td><td>选了文中提到、但不回答问题的 → 练题干关键词识别</td></tr>
+              <tr><td><b>长句没拆开</b></td><td>词都认识，读不出谁修饰谁 → 练「先抓主干」</td></tr>
+              <tr><td><b>逻辑反了</b></td><td>把让步当结论、因果颠倒 → 专门标 however / while / despite / instead</td></tr>
+              <tr><td><b>没时间</b></td><td>最后几题靠猜 → 改的是时间分配表，不是知识点</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:8px">cet4.top 上可查 2015–2026 年共 152 套四六级真题在线练习（自动判分）；另有网站收录 2016–2026 年四级真题 53 套。卷子根本用不完，所以断档欠下的套数永远不用补。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRIORITY ============ -->
+  <section id="priority">
+    <div class="sec-head">
+      <h2>时间不够时，砍的顺序</h2>
+      <p>从上往下是保留顺序，从下往上砍。这一条和防断档系统配合使用：忙的那几周，只保前两项也行。</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <ol class="priority">
+          <li><div><b>单词 SRS + 真题生词</b><br><span class="small muted">一切的基础，断一天欠账翻倍，所以排第一</span></div></li>
+          <li><div><b>听力精听</b><br><span class="small muted">35%，且最难临考突击，只放一遍没有补救机会</span></div></li>
+          <li><div><b>仔细阅读</b><br><span class="small muted">单独占 20%，是全卷单题价值最高的题型</span></div></li>
+          <li><div><b>写作框架</b><br><span class="small muted">15%，框架定下来后是性价比最高的稳定分</span></div></li>
+          <li><div><b>翻译</b><br><span class="small muted">15%，和写作共用句型能力，一起练</span></div></li>
+          <li><div><b>长篇匹配</b><br><span class="small muted">10%，技巧性强，后期花两三天就能学会</span></div></li>
+          <li><div><b>选词填空</b><br><span class="small muted">只有 5%，永远最后做，没时间就猜</span></div></li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>直接砍掉，不心疼</h3>
+        <ul class="checklist avoid">
+          <li>商业模拟卷（只做真题）</li>
+          <li>速读课程（无证据支持）</li>
+          <li>第二本、第三本词汇书（一本 + 一个 App 足够）</li>
+          <li>拿美剧英剧、歌曲当听力主材料</li>
+          <li>整篇背诵范文（反模板化阅卷下反而扣分）</li>
+          <li>抄单词表练字式背词、按字母顺序背词</li>
+          <li>只用图片联想背词（百词斩式「记住图、忘了词」）</li>
+          <li>断档后补双倍（见上方补救规则）</li>
+        </ul>
+        <h3 style="margin-top:16px">第一周只做三件事</h3>
+        <ul class="checklist">
+          <li>周六上午 9:00，严格计时做完 1 套真题（诊断卷），记录各部分用时和正确率</li>
+          <li>装好背词 App，从真题高频词开始，每天 30–40 个新词起步</li>
+          <li>把这张周节奏贴出来：工作日标准日、周六加餐、周日只复习</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESOURCES ============ -->
+  <section id="resources">
+    <div class="sec-head">
+      <h2>书和 App：最小购买清单</h2>
+      <p>先说清：销量和应用商店排名只是热度信号，不是效果证据——没有任何来源做过「用哪本书过级率更高」的对照研究。下面的推荐是热度 + 是否适合弱基础的综合判断。价格会变，买之前认准最新版次（2026.12 / 2027.6 版，应包含 2026 年 6 月真题）。</p>
+    </div>
+    <p style="margin-bottom:12px"><b>最小清单（一本书 + 一个 App + 免费资源，就够了）：</b></p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>资源</th><th>类型</th><th>优点</th><th>注意</th><th>适合你吗</th></tr></thead>
+        <tbody>
+          <tr><td><b>巨微《四级真题闪过·逐句精解》+《四级词汇闪过》</b></td><td>书</td><td>阅读、听力、翻译逐句精解；词汇按考频分级；带视频课</td><td>讲解很厚、推进慢；容易变成「看讲解」代替「做题」</td><td><b>首选</b>——专为弱基础设计</td></tr>
+          <tr><td><b>星火《四级真题通关》</b></td><td>书</td><td>京东评论 50 万+ 的畅销款；19 套真题 + 专项册 + 词汇自测，一套齐全</td><td>讲解细致程度不如巨微；全家桶容易看着就累</td><td>适合——只想买一本就买它</td></tr>
+          <tr><td><b>新东方《四级词汇词根+联想记忆法》乱序版（绿宝书）</b></td><td>书</td><td>词根词缀法；乱序编排，不用从 A 背起</td><td>词根法本身练不出听力辨音，必须配 App 的 SRS</td><td>适合——当纸质词汇书用</td></tr>
+          <tr><td><b>墨墨背单词</b></td><td>App</td><td>多份 2025–26 对比里自适应 SRS 调度被评最强，长时记忆靠它</td><td>免费单词上限有限，扩容约 ¥163 / 17,600 词（据对比文），或靠打卡赚额度</td><td><b>首选背词 App</b>——前提是你能不断天，而这正是本计划在保的</td></tr>
+          <tr><td><b>不背单词</b></td><td>App</td><td>例句带真实影视 / 纪录片 / 新闻原声，练听感和搭配很好</td><td>复习算法弱于墨墨；断几天复习债滚得更快</td><td>适合——尤其听力是短板时</td></tr>
+          <tr><td><b>扇贝单词 / 扇贝英语</b></td><td>App</td><td>核心词汇免费；例句来自真题；阅读听力生态齐全</td><td>部分进阶功能付费</td><td>适合——免费全能备选</td></tr>
+          <tr><td><b>百词斩</b></td><td>App</td><td>免费、图片联想、上手门槛最低，第一遍过词很快</td><td>最常被批评的一点：<b>记住图片、忘了词</b>；要用就切纯文字模式自测</td><td>只能当起步工具，不能单独依赖</td></tr>
+          <tr><td><b>B 站真题听力合集（2015–2025）</b></td><td>免费视频</td><td>真题原声 + 原文，逐句精听，免费</td><td>UP 主质量参差；部分内容收费（充电）</td><td><b>是</b>——主要免费听力材料</td></tr>
+          <tr><td><b>cet4.top（绿宝库）</b></td><td>免费网站</td><td>免费 12 周计划、语法模块、4,354 词带音标练习、152 套真题在线自动判分</td><td>小型非官方站；部分功能需注册</td><td>是——免费的计划骨架</td></tr>
+          <tr><td><b>可可英语 / 沪江英语</b></td><td>网站 / App</td><td>免费真题听力、新闻、分级阅读</td><td>质量不一，容易逛成被动浏览</td><td>免费补充即可</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:8px">专项书（只练阅读 / 只练听力的那种）先不要买：等到第 12 周后某个部分仍低于 50%，再针对性补。另外提醒一句与计划无关但必须查的事：四级一般只限在校大学生报考，部分学校不许大一上学期报考、规则各校不同——报名资格和 2027 年 6 月的具体考试日期、报名时间（通常 3 月），请以你学校的教务通知为准。</p>
+  </section>
+
+  <footer>
+    <h3 style="margin-bottom:8px">依据与来源（调研于 2026 年 11 月 13 日）</h3>
+    <p class="small muted">本页的计划综合了以下来源；其中民间「高考分 ↔ 四级分」换算无官方依据、已弃用；间隔复习 / 听写 / 跟读的效果数字来自二手综述与小样本研究，只支持方向、不作精确承诺。</p>
+    <ul class="small muted" style="padding-left:18px">
+      <li>题型结构、权重、时间、单题分值、语法与词汇方法：<a href="https://cet4.top/">cet4.top</a>（已实访核对）</li>
+      <li>真题三遍法与错题分类：<a href="https://www.yingyuzhenti.com/blog/cet-past-paper-how-to-practice">yingyuzhenti.com</a>（2026-11-10）</li>
+      <li>「官方不设及格线、425 为惯例线」：<a href="https://speakshark.com/blog/cet-no-pass-mark-no-speaking">speakshark.com</a>；教育部考试中心官方说明页本次未能直接打开，此点为转引官方说法的二手来源</li>
+      <li>2026 年 12 月考试日期（12 月 12 日 9:00–11:20）：教育部考试中心通知（经检索索引）<a href="https://cet.neea.edu.cn/xhtml1/report/2609/1-1.htm">cet.neea.edu.cn</a></li>
+      <li>写作反模板化：<a href="https://xdf.cn/294/202611/15473954.html">新东方</a>；翻译方法：<a href="https://mtoutiao.xdf.cn/cet4-6/202601/15072584.html">新东方头条</a></li>
+      <li>间隔重复证据综述：<a href="https://www.diane.app/en/guides/spaced-repetition-language-learning">diane.app</a>；跟读 / 听写研究：<a href="https://jalt-publications.org/sites/default/files/pdf-article/jj47.1-art1.pdf">JALT Publications</a></li>
+      <li>书目销量信号：<a href="https://www.jd.com/phb/key_1713f759a04ec73bdd85.html">京东图书榜</a>；App 对比：<a href="https://post.smzdm.com/p/avgwlvpn/">什么值得买</a>（2026-08-31）</li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var data = {
+    min: {
+      note: "保底日的全部意义就是不断天：单词欠账不清，SRS 就会崩；精听哪怕只做 8 分钟，耳朵也不断线。做完就停，不许加码——加码会让你明天更不想开始。",
+      blocks: [
+        ["约 10 分钟", "复习到期单词", "打开 App，把今天到期的复习全部清掉。不学新词。先回忆、再看答案。"],
+        ["约 8 分钟", "精听 1 小段", "真题听力选 1 篇短篇或 1 段对话：听一遍做题 → 对原文看哪里没听懂 → 生词记下来。只做一遍流程，不逐句听写。"]
+      ]
+    },
+    std: {
+      note: "标准日是计划的默认档：一周能有 4–5 个标准日，进度就完全跟得上三阶段表。60 分钟到点就停。",
+      blocks: [
+        ["20 分钟", "单词 SRS", "30–40 个新词 + 全部到期复习（第二阶段起改为约 15 分钟：只复习 + 真题生词）。先回忆再看答案，新词先读出声。"],
+        ["20 分钟", "听力精听 1 篇", "按考试节奏听一遍做题 → 难句逐句听写或跟读 → 对原文复盘：标同义替换和转折词，生词进生词本。"],
+        ["20 分钟", "仔细阅读 1 篇", "计时做（约 2 分钟/题）：先题干后定位，正确选项找同义改写。错题先归类（词不认识 / 定位错 / 长句 / 逻辑 / 时间），生词进生词本。"]
+      ]
+    },
+    plus: {
+      note: "加餐只在周六。没有加餐的一周也是合格的一周；状态不好就降回标准日甚至保底日，不要硬撑出一个「崩溃周」。进入冲刺阶段（第 23 周起），加餐日改为 9:00 开始的完整真题一套（125 分钟）+ 当天复盘错题。",
+      blocks: [
+        ["60 分钟", "先完成标准日三件套", "单词 + 精听 + 仔细阅读，内容同标准日。"],
+        ["约 30 分钟", "作文 1 篇（计时）", "真题题目：25 分钟写 + 5 分钟按六项清单自查。用自己的框架组装，不背范文。写完把用错的句型记下来。"],
+        ["约 30 分钟", "翻译 1 段（计时）", "真题段落：切句 → 搭主干 → 挂修饰 → 查时态单复数。写完逐句对照参考译文，记下绕过去的词和没想到的结构。"]
+      ]
+    }
+  };
+  var blocksEl = document.getElementById('blocks');
+  var noteEl = document.getElementById('plannerNote');
+  var btns = document.querySelectorAll('.seg button');
+  function render(key){
+    var d = data[key];
+    blocksEl.innerHTML = '';
+    d.blocks.forEach(function(b){
+      var div = document.createElement('div');
+      div.className = 'block';
+      var t = document.createElement('div'); t.className = 't'; t.textContent = b[0];
+      var w = document.createElement('div'); w.className = 'what';
+      var bb = document.createElement('b'); bb.textContent = b[1];
+      var p = document.createElement('span'); p.textContent = b[2];
+      w.appendChild(bb); w.appendChild(p);
+      div.appendChild(t); div.appendChild(w);
+      blocksEl.appendChild(div);
+    });
+    noteEl.textContent = d.note;
+    btns.forEach(function(btn){
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-mode') === key ? 'true' : 'false');
+    });
+  }
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){ render(btn.getAttribute('data-mode')); });
+  });
+  render('std');
+})();
+</script>
+</body>
+</html>
