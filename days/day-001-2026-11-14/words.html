@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>背单词：第1天 30个校园/教育高频词 - CET4</title>
+ <style>
+button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:3rem}
+*{box-sizing:border-box}
+:root{--bg:#f7f5f0;--surface:#ffffff;--surface2:#efece4;--ink:#1c2420;--muted:#5b665f;--line:#ddd8cb;--accent:#1f6b4a;--accent-ink:#ffffff;--accent-soft:#e3efe7;--amber:#9a6b12;--amber-soft:#f7ecd2;--red:#9c3d2e;--red-soft:#f9e6e1;--blue:#2f5d8a;--blue-soft:#e4ecf5;--radius:14px;--font:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;--serif:"Noto Serif SC","Songti SC","SimSun",serif}
+@media (prefers-color-scheme: dark){:root{--bg:#141816;--surface:#1e2421;--surface2:#262d29;--ink:#ece9e0;--muted:#a8b0a8;--line:#3a423c;--accent:#4db380;--accent-ink:#0d1f16;--accent-soft:#223a2d;--amber:#e0b45a;--amber-soft:#3d3319;--red:#e08a76;--red-soft:#3d2620;--blue:#8db4d9;--blue-soft:#25374a}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px 64px}
+a{color:var(--accent);text-underline-offset:3px}
+h1{font-family:var(--serif);font-size:1.8rem;line-height:1.3;margin:0}
+h2{font-size:1.25rem;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.hero{padding:28px 0 8px}
+.meta{background:var(--accent-soft);border-radius:var(--radius);padding:14px 18px;margin-top:14px}
+.meta p{margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-top:14px}
+.btn{display:inline-block;margin:6px 8px 0 0;padding:12px 18px;min-height:48px;background:var(--accent);color:var(--accent-ink);border-radius:10px;text-decoration:none;font-weight:700;border:1px solid var(--accent);cursor:pointer;font:inherit}
+.btn.ghost{background:var(--surface);color:var(--accent);border:1px solid var(--accent)}
+.bar{height:12px;background:var(--surface2);border-radius:999px;overflow:hidden;margin:8px 0}
+.bar>i{display:block;height:100%;background:var(--accent);width:0%}
+.word{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:16px 18px;margin-top:12px}
+.word.en{font-size:1.3rem;font-weight:800}
+.word.en.no{color:var(--muted);font-size:.9rem;font-weight:600;margin-right:8px}
+.word.pron{color:var(--muted);font-size:.9rem;margin-left:8px}
+.word.zh{font-weight:700;margin-top:2px}
+.word.ex{margin-top:8px;font-style:italic}
+.word.note{margin-top:6px;font-size:.9rem;color:var(--muted)}
+.mark{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mark button{flex:1;min-width:90px;min-height:48px;padding:10px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;touch-action:manipulation}
+.mark button.on-known{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.mark button.on-fuzzy{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+.mark button.on-unknown{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.mark button[data-state="known"].on-known,.mark button[data-state="fuzzy"].on-fuzzy,.mark button[data-state="unknown"].on-unknown{outline:2px solid currentColor;outline-offset:1px}
+.done-tag{display:none;color:var(--accent);font-weight:700;font-size:.9rem}
+.word.done .done-tag{display:inline}
+textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<p class="small muted"><a href="../../">← 回备考计划首页</a> · <a href="./">第1天总览</a> · <a href="../">学习日志</a></p>
+<h1>背单词：第1天</h1>
+<div class="meta">
+<p><b>日期：2026年11月14日 星期六</b> · 备考第1天 · 主题：<b>校园 / 教育类高频词</b></p>
+<p class="small muted" style="margin:4px 0 0">目标：2027年6月四级 · 上次 390 多分，离 425 差约 30 分 · 今天 30 个词，约 20 分钟</p>
+</div>
+</div>
+<div class="card">
+<h2>进度</h2>
+<p style="margin:0">已学 <b id="c-done">0</b> / 30 · 认识 <b id="c-known">0</b> · 模糊 <b id="c-fuzzy">0</b> · 不认识 <b id="c-unknown">0</b></p>
+<div class="bar"><i id="bar"></i></div>
+<p class="small muted" style="margin:0">点每个词下面的「认识 / 模糊 / 不认识」，可以改。进度只存在这台手机这个浏览器里（localStorage），不会自动同步到小 muse 或别的设备——学完点下面「复制进度」，粘贴发给小 muse，我来统计和安排明天的复习。</p>
+<button class="btn" type="button" id="copyBtn">复制进度发给小muse</button>
+<button class="btn ghost" type="button" id="resetBtn">清空今天的标记</button>
+<p class="small" id="copyMsg" style="margin:8px 0 0"></p>
+<textarea id="summary" readonly style="margin-top:10px" placeholder="点「复制进度」后，这里会生成一段纯文字进度，复制后粘贴到 Muse 聊天里发给我。"></textarea>
+</div>
+<div class="small muted" style="margin-top:14px">用法：先看英文想意思，实在想不起来再看中文和例句。标「模糊」和「不认识」的词，明天优先复习。例句都是我现写的原创句子，不是抄书里的。</div>
+ <article class="word" id="w-1" data-word="campus">
+<div class="en"><span class="no">01</span>campus<span class="pron">/ˈkæmpəs/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 校园</div>
+<div class="ex">Our campus is small, but the library stays open late every night.</div>
+<div class="note">四级高频：常与 on campus（在校内）搭配。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-2" data-word="curriculum">
+<div class="en"><span class="no">02</span>curriculum<span class="pron">/kəˈrɪkjələm/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 课程；课程设置</div>
+<div class="ex">The new curriculum adds more practical courses for first-year students.</div>
+<div class="note">注意复数 curricula；常考搭配 design a curriculum。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-3" data-word="lecture">
+<div class="en"><span class="no">03</span>lecture<span class="pron">/ˈlektʃər/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 讲座；讲课 v. 讲课</div>
+<div class="ex">The professor gave a lecture on how the brain remembers new words.</div>
+<div class="note">听力高频词：attend a lecture 上课 / 听讲座。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-4" data-word="assignment">
+<div class="en"><span class="no">04</span>assignment<span class="pron">/əˈsaɪnmənt/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 作业；任务</div>
+<div class="ex">We must hand in the assignment before Friday noon.</div>
+<div class="note">常考：finish / complete an assignment 完成作业。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-5" data-word="professor">
+<div class="en"><span class="no">05</span>professor<span class="pron">/prəˈfesər/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 教授</div>
+<div class="ex">The professor asked us to read two chapters before the next class.</div>
+<div class="note">美式常用 professor；英式多用 lecturer 指讲师。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-6" data-word="major">
+<div class="en"><span class="no">06</span>major<span class="pron">/ˈmeɪdʒər/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 专业 v. 主修</div>
+<div class="ex">She decided to major in English because she loves reading.</div>
+<div class="note">major in + 专业；a major in engineering 工程专业。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-7" data-word="semester">
+<div class="en"><span class="no">07</span>semester<span class="pron">/sɪˈmestər/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 学期</div>
+<div class="ex">This semester we have five courses and one lab class.</div>
+<div class="note">a new semester 新学期；at the end of the semester 学期末。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-8" data-word="tuition">
+<div class="en"><span class="no">08</span>tuition<span class="pron">/tuˈɪʃn/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 学费</div>
+<div class="ex">Tuition has risen a lot, so many students look for part-time jobs.</div>
+<div class="note">常考话题：高学费与打工，写作可用。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-9" data-word="scholarship">
+<div class="en"><span class="no">09</span>scholarship<span class="pron">/ˈskɒlərʃɪp/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 奖学金</div>
+<div class="ex">He won a scholarship for his excellent grades last year.</div>
+<div class="note">win / get a scholarship 获得奖学金。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-10" data-word="dormitory">
+<div class="en"><span class="no">10</span>dormitory<span class="pron">/ˈdɔːmətri/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 宿舍</div>
+<div class="ex">Our dormitory is close to the library and the canteen.</div>
+<div class="note">美式口语常说 dorm；in the dormitory 住在宿舍。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-11" data-word="laboratory">
+<div class="en"><span class="no">11</span>laboratory<span class="pron">/ləˈbɒrətri/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 实验室</div>
+<div class="ex">Students must wear safety glasses in the chemistry laboratory.</div>
+<div class="note">缩写 lab；do an experiment in the lab 做实验。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-12" data-word="graduate">
+<div class="en"><span class="no">12</span>graduate<span class="pron">/ˈɡrædʒuət/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">v. 毕业 n. 毕业生</div>
+<div class="ex">She will graduate from university next June.</div>
+<div class="note">graduate from + 学校；a graduate of 某校毕业生。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-13" data-word="degree">
+<div class="en"><span class="no">13</span>degree<span class="pron">/dɪˈɡriː/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 学位；程度</div>
+<div class="ex">He hopes to get a master&#x27;s degree after four years of study.</div>
+<div class="note">a bachelor&#x27;s degree 学士学位；to some degree 在某种程度上。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-14" data-word="thesis">
+<div class="en"><span class="no">14</span>thesis<span class="pron">/ˈθiːsɪs/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 毕业论文；论文</div>
+<div class="ex">She is writing her thesis on how students learn new words.</div>
+<div class="note">复数 theses；write / defend a thesis 写 / 答辩论文。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-15" data-word="seminar">
+<div class="en"><span class="no">15</span>seminar<span class="pron">/ˈsemɪnɑːr/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 研讨会；研讨课</div>
+<div class="ex">The seminar gives every student a chance to speak.</div>
+<div class="note">小班研讨课；attend a seminar 参加研讨会。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-16" data-word="tutorial">
+<div class="en"><span class="no">16</span>tutorial<span class="pron">/tjuːˈtɔːriəl/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 辅导课</div>
+<div class="ex">I booked a tutorial to go over the maths problems I missed.</div>
+<div class="note">与 lecture 大课相对，是小班辅导。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-17" data-word="textbook">
+<div class="en"><span class="no">17</span>textbook<span class="pron">/ˈtekstbʊk/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 教科书</div>
+<div class="ex">The textbook for this course is too expensive for most students.</div>
+<div class="note">buy / borrow a textbook 买 / 借教科书。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-18" data-word="examination">
+<div class="en"><span class="no">18</span>examination<span class="pron">/ɪɡˌzæmɪˈneɪʃn/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 考试</div>
+<div class="ex">The final examination covers everything we learned this term.</div>
+<div class="note">缩写 exam；take / pass an examination 参加 / 通过考试。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-19" data-word="grade">
+<div class="en"><span class="no">19</span>grade<span class="pron">/ɡreɪd/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 成绩；年级 v. 评分</div>
+<div class="ex">Her grades improved a lot after she started reviewing every day.</div>
+<div class="note">get good grades 取得好成绩；in the second grade 二年级。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-20" data-word="enroll">
+<div class="en"><span class="no">20</span>enroll<span class="pron">/ɪnˈrəʊl/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">v. 注册入学；报名</div>
+<div class="ex">More students enroll in online courses every year.</div>
+<div class="note">enroll in a course 报名一门课；常考被动 be enrolled。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-21" data-word="attend">
+<div class="en"><span class="no">21</span>attend<span class="pron">/əˈtend/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">v. 出席；上（课）</div>
+<div class="ex">Please attend every class if you want to pass the course.</div>
+<div class="note">attend a meeting / class 出席会议 / 上课；反义 be absent。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-22" data-word="absent">
+<div class="en"><span class="no">22</span>absent<span class="pron">/ˈæbsənt/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">adj. 缺席的</div>
+<div class="ex">Two students were absent from class this morning.</div>
+<div class="note">be absent from 缺席；absence n. 缺席。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-23" data-word="participate">
+<div class="en"><span class="no">23</span>participate<span class="pron">/pɑːˈtɪsɪpeɪt/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">v. 参加</div>
+<div class="ex">All students are welcome to participate in the English club.</div>
+<div class="note">participate in + 活动；participation n. 参加。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-24" data-word="academic">
+<div class="en"><span class="no">24</span>academic<span class="pron">/ˌækəˈdemɪk/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">adj. 学术的</div>
+<div class="ex">He reads one academic article every week to build his vocabulary.</div>
+<div class="note">academic year 学年；academic performance 学业表现。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-25" data-word="discipline">
+<div class="en"><span class="no">25</span>discipline<span class="pron">/ˈdɪsəplɪn/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 纪律；学科</div>
+<div class="ex">Good discipline helps a class learn faster and argue less.</div>
+<div class="note">既指纪律，也指学科：a new discipline 一门新学科。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-26" data-word="library">
+<div class="en"><span class="no">26</span>library<span class="pron">/ˈlaɪbrəri/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 图书馆</div>
+<div class="ex">I borrow two books from the library every weekend.</div>
+<div class="note">borrow books from the library 从图书馆借书。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-27" data-word="cafeteria">
+<div class="en"><span class="no">27</span>cafeteria<span class="pron">/ˌkæfəˈtɪəriə/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">n. 食堂</div>
+<div class="ex">The cafeteria is crowded at noon, so we eat a little earlier.</div>
+<div class="note">美式常说 cafeteria；英式常说 canteen。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-28" data-word="extracurricular">
+<div class="en"><span class="no">28</span>extracurricular<span class="pron">/ˌekstrəkəˈrɪkjələ/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">adj. 课外的</div>
+<div class="ex">Extracurricular activities help students make friends and relax.</div>
+<div class="note">extracurricular activities 课外活动，写作高频。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-29" data-word="compulsory">
+<div class="en"><span class="no">29</span>compulsory<span class="pron">/kəmˈpʌlsəri/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">adj. 必修的；强制的</div>
+<div class="ex">English is a compulsory course for all first-year students.</div>
+<div class="note">compulsory course 必修课；反义 optional 选修的。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+ <article class="word" id="w-30" data-word="optional">
+<div class="en"><span class="no">30</span>optional<span class="pron">/ˈɒpʃənl/</span> <span class="done-tag">✓ 已标记</span></div>
+<div class="zh">adj. 选修的；可选的</div>
+<div class="ex">This class is optional, but most students still choose to take it.</div>
+<div class="note">an optional course 选修课；optional 后常接 to do。</div>
+<div class="mark">
+<button type="button" data-state="known">认识</button>
+<button type="button" data-state="fuzzy">模糊</button>
+<button type="button" data-state="unknown">不认识</button>
+</div>
+</article>
+<div class="card">
+<h2>学完了？</h2>
+<p>点上面「复制进度发给小muse」，把生成的文字粘贴到 Muse 聊天里，我会记下你今天哪些词不熟，明天邮件里就给你排这些词的复习。</p>
+<a class="btn" href="./">回第1天总览 →</a>
+<a class="btn ghost" href="../../">回备考计划首页</a>
+</div>
+</div>
+<script>
+(function(){
+var KEY = 'cet4-words-day-001';
+var words = [];
+document.querySelectorAll('.word').forEach(function(el){ words.push(el.getAttribute('data-word'));});
+var marks = {};
+try { marks = JSON.parse(localStorage.getItem(KEY) || '{}');} catch(e){ marks = {};}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(marks));} catch(e){}}
+function render(){
+var known=0, fuzzy=0, unknown=0, done=0;
+document.querySelectorAll('.word').forEach(function(el){
+var w = el.getAttribute('data-word');
+var m = marks[w];
+el.classList.toggle('done',!!m);
+el.querySelectorAll('.mark button').forEach(function(b){
+b.classList.toggle('on-'+b.getAttribute('data-state'), m === b.getAttribute('data-state'));
+});
+if(m==='known') known++;
+else if(m==='fuzzy') fuzzy++;
+else if(m==='unknown') unknown++;
+if(m) done++;
+});
+document.getElementById('c-done').textContent = done;
+document.getElementById('c-known').textContent = known;
+document.getElementById('c-fuzzy').textContent = fuzzy;
+document.getElementById('c-unknown').textContent = unknown;
+document.getElementById('bar').style.width = (done/words.length*100) + '%';
+}
+document.querySelectorAll('.word.mark button').forEach(function(b){
+b.addEventListener('click', function(){
+var card = b.closest('.word');
+var w = card.getAttribute('data-word');
+var s = b.getAttribute('data-state');
+if(marks[w] === s){ delete marks[w];} else { marks[w] = s;}
+save(); render();
+});
+});
+function summaryText(){
+var known=[], fuzzy=[], unknown=[];
+words.forEach(function(w){
+if(marks[w]==='known') known.push(w);
+else if(marks[w]==='fuzzy') fuzzy.push(w);
+else if(marks[w]==='unknown') unknown.push(w);
+});
+var done = known.length + fuzzy.length + unknown.length;
+var lines = [];
+lines.push('2026年11月14日 星期六 · 备考第1天 · 校园/教育类');
+lines.push('已学 ' + done + '/30 · 认识 ' + known.length + ' · 模糊 ' + fuzzy.length + ' · 不认识 ' + unknown.length);
+lines.push('认识：' + (known.join(', ') || '无'));
+lines.push('模糊：' + (fuzzy.join(', ') || '无'));
+lines.push('不认识：' + (unknown.join(', ') || '无'));
+lines.push('请小muse按这个结果安排明天的复习。');
+return lines.join('\n');
+}
+document.getElementById('copyBtn').addEventListener('click', function(){
+var t = summaryText();
+document.getElementById('summary').value = t;
+var msg = document.getElementById('copyMsg');
+function ok(){ msg.textContent = '已复制！粘贴到 Muse 聊天里发给我就行。';}
+function fail(){ msg.textContent = '自动复制没成功，请长按上面框里的文字，全选复制，再粘贴发给我。';}
+if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok, fail);}
+else { var ta = document.getElementById('summary'); ta.select(); try { document.execCommand('copy'); ok();} catch(e){ fail();}}
+});
+document.getElementById('resetBtn').addEventListener('click', function(){
+if(!confirm('确定清空今天 30 个词的全部标记吗？')) return;
+marks = {}; save(); render();
+document.getElementById('summary').value = '';
+document.getElementById('copyMsg').textContent = '已清空。';
+});
+render();
+})();
+</script>
+</body>
+</html>

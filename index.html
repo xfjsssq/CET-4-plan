@@ -7,7 +7,7 @@
 <link rel="icon" href="data:," />
 <title>CET4 备考计划</title>
 <style>
-  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:3rem}
   *{box-sizing:border-box}
   :root{
     --bg:#f7f5f0; --surface:#ffffff; --surface2:#efece4; --ink:#1c2420; --muted:#5b665f;
@@ -73,14 +73,25 @@
 
   /* Interactive day planner */
   .planner{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
-  .seg{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
-  .seg button{flex:1;min-width:130px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;min-height:44px}
-  .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  /* Toggle fix 2026-11-14: pure-CSS radio toggle, works with JS disabled/blocked.
+     Radios are direct children of .planner so :checked ~ .panels works. */
+  .planner>input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+  .seg{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 8px}
+  .seg label{flex:1;min-width:130px;padding:12px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+  .planner:has(#mode-min:checked) label[for="mode-min"],.planner:has(#mode-std:checked) label[for="mode-std"],.planner:has(#mode-plus:checked) label[for="mode-plus"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .planner[data-active="min"] label[for="mode-min"],.planner[data-active="std"] label[for="mode-std"],.planner[data-active="plus"] label[for="mode-plus"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
   .blocks{display:grid;gap:8px}
   .block{display:flex;gap:12px;align-items:baseline;background:var(--surface2);border-radius:10px;padding:11px 14px}
   .block .t{font-weight:800;white-space:nowrap;min-width:64px}
   .block .what b{display:block}
   .planner-note{margin-top:12px}
+  .mode-panel{display:none}
+  #mode-min:checked ~ .panels #panel-min{display:block}
+  #mode-std:checked ~ .panels #panel-std{display:block}
+  #mode-plus:checked ~ .panels #panel-plus{display:block}
+  .today-box{background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--radius);padding:18px 20px}
+  .today-box a{font-weight:700}
+  .today-box .btn{display:inline-block;margin:6px 8px 0 0;padding:12px 18px;min-height:48px;background:var(--accent);color:var(--accent-ink);border-radius:10px;text-decoration:none;font-weight:700}
 
   /* Tables */
   .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
@@ -212,20 +223,61 @@
     </div>
   </section>
 
+  <!-- ============ TODAY ============ -->
+  <section id="today">
+    <div class="sec-head">
+      <h2>今天的学习</h2>
+      <p>每天一个文件夹，一天一个页面，学完就记下来，方便以后回忆，也方便以后公开分享。</p>
+    </div>
+    <div class="today-box">
+      <p style="margin:0 0 6px"><b>2026年11月14日 星期六 · 备考第1天</b> · 主题：校园 / 教育类高频词</p>
+      <a class="btn" href="days/day-001-2026-11-14/words.html">背单词：第1天 30个词 →</a>
+      <a class="btn" href="days/day-001-2026-11-14/">第1天总览 →</a>
+      <p class="small muted" style="margin:10px 0 0"><a href="days/">学习日志：按日期查看每一天 →</a></p>
+    </div>
+  </section>
+
   <!-- ============ DAILY PLANNER ============ -->
   <section id="planner">
     <div class="sec-head">
       <h2>每天具体学什么</h2>
       <p>点一种日子，看分钟级拆分。三个版本学的内容完全一样，只是量不同——所以哪天降级都不亏进度。</p>
     </div>
-    <div class="planner">
+    <div class="planner" data-active="std">
+      <input type="radio" name="daymode" id="mode-min" value="min">
+      <input type="radio" name="daymode" id="mode-std" value="std" checked>
+      <input type="radio" name="daymode" id="mode-plus" value="plus">
       <div class="seg" role="group" aria-label="选择日子类型">
-        <button type="button" data-mode="min" aria-pressed="false">保底日 · 15–20 分钟</button>
-        <button type="button" data-mode="std" aria-pressed="true">标准日 · 60 分钟</button>
-        <button type="button" data-mode="plus" aria-pressed="false">加餐日 · 约 2 小时</button>
+        <label for="mode-min">保底日 · 15–20 分钟</label>
+        <label for="mode-std">标准日 · 60 分钟</label>
+        <label for="mode-plus">加餐日 · 约 2 小时</label>
       </div>
-      <div class="blocks" id="blocks"></div>
-      <p class="planner-note small muted" id="plannerNote"></p>
+      <p class="small muted" style="margin:0 0 12px">切换不依赖脚本：点上面三个按钮即可，内容立刻换。如果点不动，试试用手机自带浏览器打开本页，或刷新一次；QQ 邮箱、微信内置浏览器有时会拦截页面脚本，本页已改成纯样式切换，不用脚本也能点。</p>
+      <div class="panels">
+        <div class="mode-panel" id="panel-min">
+          <div class="blocks">
+            <div class="block"><div class="t">约 10 分钟</div><div class="what"><b>复习到期单词</b><span>打开 App，把今天到期的复习全部清掉。不学新词。先回忆、再看答案。</span></div></div>
+            <div class="block"><div class="t">约 8 分钟</div><div class="what"><b>精听 1 小段</b><span>真题听力选 1 篇短篇或 1 段对话：听一遍做题 → 对原文看哪里没听懂 → 生词记下来。只做一遍流程，不逐句听写。</span></div></div>
+          </div>
+          <p class="planner-note small muted">保底日的全部意义就是不断天：单词欠账不清，SRS 就会崩；精听哪怕只做 8 分钟，耳朵也不断线。做完就停，不许加码——加码会让你明天更不想开始。</p>
+        </div>
+        <div class="mode-panel" id="panel-std">
+          <div class="blocks">
+            <div class="block"><div class="t">20 分钟</div><div class="what"><b>单词 SRS</b><span>30–40 个新词 + 全部到期复习（第二阶段起改为约 15 分钟：只复习 + 真题生词）。先回忆再看答案，新词先读出声。</span></div></div>
+            <div class="block"><div class="t">20 分钟</div><div class="what"><b>听力精听 1 篇</b><span>按考试节奏听一遍做题 → 难句逐句听写或跟读 → 对原文复盘：标同义替换和转折词，生词进生词本。</span></div></div>
+            <div class="block"><div class="t">20 分钟</div><div class="what"><b>仔细阅读 1 篇</b><span>计时做（约 2 分钟/题）：先题干后定位，正确选项找同义改写。错题先归类（词不认识 / 定位错 / 长句 / 逻辑 / 时间），生词进生词本。</span></div></div>
+          </div>
+          <p class="planner-note small muted">标准日是计划的默认档：一周能有 4–5 个标准日，进度就完全跟得上三阶段表。60 分钟到点就停。</p>
+        </div>
+        <div class="mode-panel" id="panel-plus">
+          <div class="blocks">
+            <div class="block"><div class="t">60 分钟</div><div class="what"><b>先完成标准日三件套</b><span>单词 + 精听 + 仔细阅读，内容同标准日。</span></div></div>
+            <div class="block"><div class="t">约 30 分钟</div><div class="what"><b>作文 1 篇（计时）</b><span>真题题目：25 分钟写 + 5 分钟按六项清单自查。用自己的框架组装，不背范文。写完把用错的句型记下来。</span></div></div>
+            <div class="block"><div class="t">约 30 分钟</div><div class="what"><b>翻译 1 段（计时）</b><span>真题段落：切句 → 搭主干 → 挂修饰 → 查时态单复数。写完逐句对照参考译文，记下绕过去的词和没想到的结构。</span></div></div>
+          </div>
+          <p class="planner-note small muted">加餐只在周六。没有加餐的一周也是合格的一周；状态不好就降回标准日甚至保底日，不要硬撑出一个「崩溃周」。进入冲刺阶段（第 23 周起），加餐日改为 9:00 开始的完整真题一套（125 分钟）+ 当天复盘错题。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -539,58 +591,14 @@
 </div>
 
 <script>
+/* Enhancement only: the toggle above is pure CSS and works without this script.
+   This only keeps the highlighted button in sync on very old browsers. */
 (function(){
-  var data = {
-    min: {
-      note: "保底日的全部意义就是不断天：单词欠账不清，SRS 就会崩；精听哪怕只做 8 分钟，耳朵也不断线。做完就停，不许加码——加码会让你明天更不想开始。",
-      blocks: [
-        ["约 10 分钟", "复习到期单词", "打开 App，把今天到期的复习全部清掉。不学新词。先回忆、再看答案。"],
-        ["约 8 分钟", "精听 1 小段", "真题听力选 1 篇短篇或 1 段对话：听一遍做题 → 对原文看哪里没听懂 → 生词记下来。只做一遍流程，不逐句听写。"]
-      ]
-    },
-    std: {
-      note: "标准日是计划的默认档：一周能有 4–5 个标准日，进度就完全跟得上三阶段表。60 分钟到点就停。",
-      blocks: [
-        ["20 分钟", "单词 SRS", "30–40 个新词 + 全部到期复习（第二阶段起改为约 15 分钟：只复习 + 真题生词）。先回忆再看答案，新词先读出声。"],
-        ["20 分钟", "听力精听 1 篇", "按考试节奏听一遍做题 → 难句逐句听写或跟读 → 对原文复盘：标同义替换和转折词，生词进生词本。"],
-        ["20 分钟", "仔细阅读 1 篇", "计时做（约 2 分钟/题）：先题干后定位，正确选项找同义改写。错题先归类（词不认识 / 定位错 / 长句 / 逻辑 / 时间），生词进生词本。"]
-      ]
-    },
-    plus: {
-      note: "加餐只在周六。没有加餐的一周也是合格的一周；状态不好就降回标准日甚至保底日，不要硬撑出一个「崩溃周」。进入冲刺阶段（第 23 周起），加餐日改为 9:00 开始的完整真题一套（125 分钟）+ 当天复盘错题。",
-      blocks: [
-        ["60 分钟", "先完成标准日三件套", "单词 + 精听 + 仔细阅读，内容同标准日。"],
-        ["约 30 分钟", "作文 1 篇（计时）", "真题题目：25 分钟写 + 5 分钟按六项清单自查。用自己的框架组装，不背范文。写完把用错的句型记下来。"],
-        ["约 30 分钟", "翻译 1 段（计时）", "真题段落：切句 → 搭主干 → 挂修饰 → 查时态单复数。写完逐句对照参考译文，记下绕过去的词和没想到的结构。"]
-      ]
-    }
-  };
-  var blocksEl = document.getElementById('blocks');
-  var noteEl = document.getElementById('plannerNote');
-  var btns = document.querySelectorAll('.seg button');
-  function render(key){
-    var d = data[key];
-    blocksEl.innerHTML = '';
-    d.blocks.forEach(function(b){
-      var div = document.createElement('div');
-      div.className = 'block';
-      var t = document.createElement('div'); t.className = 't'; t.textContent = b[0];
-      var w = document.createElement('div'); w.className = 'what';
-      var bb = document.createElement('b'); bb.textContent = b[1];
-      var p = document.createElement('span'); p.textContent = b[2];
-      w.appendChild(bb); w.appendChild(p);
-      div.appendChild(t); div.appendChild(w);
-      blocksEl.appendChild(div);
-    });
-    noteEl.textContent = d.note;
-    btns.forEach(function(btn){
-      btn.setAttribute('aria-pressed', btn.getAttribute('data-mode') === key ? 'true' : 'false');
-    });
-  }
-  btns.forEach(function(btn){
-    btn.addEventListener('click', function(){ render(btn.getAttribute('data-mode')); });
+  var p = document.querySelector('.planner');
+  if(!p) return;
+  p.addEventListener('change', function(e){
+    if(e.target && e.target.name === 'daymode'){ p.setAttribute('data-active', e.target.value); }
   });
-  render('std');
 })();
 </script>
 </body>
