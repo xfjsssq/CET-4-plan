@@ -58,9 +58,12 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <h2>进度</h2>
 <p style="margin:0">已学 <b id="c-done">0</b> / 30 · 认识 <b id="c-known">0</b> · 模糊 <b id="c-fuzzy">0</b> · 不认识 <b id="c-unknown">0</b></p>
 <div class="bar"><i id="bar"></i></div>
-<p class="small muted" style="margin:0">点每个词下面的「认识 / 模糊 / 不认识」，可以改。进度只存在这台手机这个浏览器里（localStorage），不会自动同步到小 muse 或别的设备——学完点下面「复制进度」，粘贴发给小 muse，我来统计和安排明天的复习。</p>
+<p class="small muted" style="margin:0">点每个词下面的「认识 / 模糊 / 不认识」，可以改。进度只存在这台手机这个浏览器里（localStorage），不会自动同步到小 muse 或别的设备——学完点下面「复制进度」「下载进度文件」或「发邮件给小肥鱼」，把进度发到 xfjsssq@gmail.com，我收到后会统计和安排明天的复习。</p>
 <button class="btn" type="button" id="copyBtn">复制进度发给小muse</button>
+<button class="btn" type="button" id="downloadBtn">下载进度文件</button>
+<a class="btn" id="mailBtn" href="mailto:xfjsssq@gmail.com?subject=%E3%80%90CET4%E3%80%91%E7%AC%AC1%E5%A4%A9%E5%8D%95%E8%AF%8D%E8%BF%9B%E5%BA%A6">发邮件给小肥鱼</a>
 <button class="btn ghost" type="button" id="resetBtn">清空今天的标记</button>
+<p class="small" style="margin:10px 0 0"><b>怎么把进度发给我：</b>学完 → 点「下载进度文件」或「发邮件给小肥鱼」→ 用 QQ 邮箱把进度发到 <b>xfjsssq@gmail.com</b> → 我收到邮件后，会按你哪些词不熟来排明天的复习。下载的文件名是 cet4-day001-2026-11-14.txt，内容就是下面的进度文字，邮件附件发给我也行。</p>
 <p class="small" id="copyMsg" style="margin:8px 0 0"></p>
 <textarea id="summary" readonly style="margin-top:10px" placeholder="点「复制进度」后，这里会生成一段纯文字进度，复制后粘贴到 Muse 聊天里发给我。"></textarea>
 </div>
@@ -397,7 +400,7 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 </article>
 <div class="card">
 <h2>学完了？</h2>
-<p>点上面「复制进度发给小muse」，把生成的文字粘贴到 Muse 聊天里，我会记下你今天哪些词不熟，明天邮件里就给你排这些词的复习。</p>
+<p>点上面「复制进度发给小muse」，把生成的文字粘贴到 Muse 聊天里；或者点「下载进度文件」，把 cet4-day001-2026-11-14.txt 用 QQ 邮箱发到 xfjsssq@gmail.com；也可以直接点「发邮件给小肥鱼」，手机会调起邮件 App，收件人和正文都已填好，确认发送就行。我会记下你今天哪些词不熟，明天邮件里就给你排这些词的复习。</p>
 <a class="btn" href="./">回第1天总览 →</a>
 <a class="btn ghost" href="../../">回备考计划首页</a>
 </div>
@@ -429,6 +432,7 @@ document.getElementById('c-known').textContent = known;
 document.getElementById('c-fuzzy').textContent = fuzzy;
 document.getElementById('c-unknown').textContent = unknown;
 document.getElementById('bar').style.width = (done/words.length*100) + '%';
+if(typeof updateMail === 'function'){ updateMail(); }
 }
 document.querySelectorAll('.word.mark button').forEach(function(b){
 b.addEventListener('click', function(){
@@ -465,6 +469,25 @@ function fail(){ msg.textContent = '自动复制没成功，请长按上面框�
 if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok, fail);}
 else { var ta = document.getElementById('summary'); ta.select(); try { document.execCommand('copy'); ok();} catch(e){ fail();}}
 });
+document.getElementById('downloadBtn').addEventListener('click', function(){
+var t = summaryText();
+document.getElementById('summary').value = t;
+var blob = new Blob([t], {type: 'text/plain;charset=utf-8'});
+var url = URL.createObjectURL(blob);
+var a = document.createElement('a');
+a.href = url;
+a.download = 'cet4-day001-2026-11-14.txt';
+document.body.appendChild(a);
+a.click();
+setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+document.getElementById('copyMsg').textContent = '已下载 cet4-day001-2026-11-14.txt，用 QQ 邮箱把它发到 xfjsssq@gmail.com 就行。';
+});
+function updateMail(){
+var m = document.getElementById('mailBtn');
+if(!m) return;
+m.href = 'mailto:xfjsssq@gmail.com?subject=' + encodeURIComponent('【CET4】第1天单词进度') + '&body=' + encodeURIComponent(summaryText());
+}
+document.getElementById('mailBtn').addEventListener('click', function(){ updateMail(); });
 document.getElementById('resetBtn').addEventListener('click', function(){
 if(!confirm('确定清空今天 30 个词的全部标记吗？')) return;
 marks = {}; save(); render();
