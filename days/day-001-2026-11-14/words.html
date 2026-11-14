@@ -34,11 +34,13 @@ p{margin:0 0 10px}
 .word.ex{margin-top:8px;font-style:italic}
 .word.note{margin-top:6px;font-size:.9rem;color:var(--muted)}
 .mark{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.mark button{flex:1;min-width:90px;min-height:48px;padding:10px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;touch-action:manipulation}
-.mark button.on-known{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.mark button.on-fuzzy{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
-.mark button.on-unknown{background:var(--red-soft);color:var(--red);border-color:var(--red)}
-.mark button[data-state="known"].on-known,.mark button[data-state="fuzzy"].on-fuzzy,.mark button[data-state="unknown"].on-unknown{outline:2px solid currentColor;outline-offset:1px}
+.mark input{position:absolute;opacity:0;width:1px;height:1px;overflow:hidden}
+.mark input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px}
+.mark label{flex:1;min-width:90px;min-height:48px;padding:10px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;touch-action:manipulation;text-align:center;display:flex;align-items:center;justify-content:center}
+.mark input[value="known"]:checked + label{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.mark input[value="fuzzy"]:checked + label{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+.mark input[value="unknown"]:checked + label{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.word:has(input:checked) .done-tag{display:inline}
 .done-tag{display:none;color:var(--accent);font-weight:700;font-size:.9rem}
 .word.done .done-tag{display:inline}
 textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
@@ -67,16 +69,16 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <p class="small" id="copyMsg" style="margin:8px 0 0"></p>
 <textarea id="summary" readonly style="margin-top:10px" placeholder="点「复制进度」后，这里会生成一段纯文字进度，复制后粘贴到 Muse 聊天里发给我。"></textarea>
 </div>
-<div class="small muted" style="margin-top:14px">用法：先看英文想意思，实在想不起来再看中文和例句。标「模糊」和「不认识」的词，明天优先复习。例句都是我现写的原创句子，不是抄书里的。</div>
+<div class="small muted" style="margin-top:14px">用法：先看英文想意思，实在想不起来再看中文和例句。标「模糊」和「不认识」的词，明天优先复习。点选后颜色会立刻变，再点一次已选的可以取消；顶部的数字和保存需要脚本，若点了颜色变了、数字不动，请用手机自带浏览器打开本页。例句都是我现写的原创句子，不是抄书里的。</div>
  <article class="word" id="w-1" data-word="campus">
 <div class="en"><span class="no">01</span>campus<span class="pron">/ˈkæmpəs/</span> <span class="done-tag">✓ 已标记</span></div>
 <div class="zh">n. 校园</div>
 <div class="ex">Our campus is small, but the library stays open late every night.</div>
 <div class="note">四级高频：常与 on campus（在校内）搭配。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m1-known" name="mark-campus" value="known"><label for="m1-known" data-state="known">认识</label>
+<input type="radio" id="m1-fuzzy" name="mark-campus" value="fuzzy"><label for="m1-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m1-unknown" name="mark-campus" value="unknown"><label for="m1-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-2" data-word="curriculum">
@@ -85,9 +87,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The new curriculum adds more practical courses for first-year students.</div>
 <div class="note">注意复数 curricula；常考搭配 design a curriculum。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m2-known" name="mark-curriculum" value="known"><label for="m2-known" data-state="known">认识</label>
+<input type="radio" id="m2-fuzzy" name="mark-curriculum" value="fuzzy"><label for="m2-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m2-unknown" name="mark-curriculum" value="unknown"><label for="m2-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-3" data-word="lecture">
@@ -96,9 +98,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The professor gave a lecture on how the brain remembers new words.</div>
 <div class="note">听力高频词：attend a lecture 上课 / 听讲座。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m3-known" name="mark-lecture" value="known"><label for="m3-known" data-state="known">认识</label>
+<input type="radio" id="m3-fuzzy" name="mark-lecture" value="fuzzy"><label for="m3-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m3-unknown" name="mark-lecture" value="unknown"><label for="m3-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-4" data-word="assignment">
@@ -107,9 +109,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">We must hand in the assignment before Friday noon.</div>
 <div class="note">常考：finish / complete an assignment 完成作业。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m4-known" name="mark-assignment" value="known"><label for="m4-known" data-state="known">认识</label>
+<input type="radio" id="m4-fuzzy" name="mark-assignment" value="fuzzy"><label for="m4-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m4-unknown" name="mark-assignment" value="unknown"><label for="m4-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-5" data-word="professor">
@@ -118,9 +120,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The professor asked us to read two chapters before the next class.</div>
 <div class="note">美式常用 professor；英式多用 lecturer 指讲师。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m5-known" name="mark-professor" value="known"><label for="m5-known" data-state="known">认识</label>
+<input type="radio" id="m5-fuzzy" name="mark-professor" value="fuzzy"><label for="m5-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m5-unknown" name="mark-professor" value="unknown"><label for="m5-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-6" data-word="major">
@@ -129,9 +131,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">She decided to major in English because she loves reading.</div>
 <div class="note">major in + 专业；a major in engineering 工程专业。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m6-known" name="mark-major" value="known"><label for="m6-known" data-state="known">认识</label>
+<input type="radio" id="m6-fuzzy" name="mark-major" value="fuzzy"><label for="m6-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m6-unknown" name="mark-major" value="unknown"><label for="m6-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-7" data-word="semester">
@@ -140,9 +142,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">This semester we have five courses and one lab class.</div>
 <div class="note">a new semester 新学期；at the end of the semester 学期末。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m7-known" name="mark-semester" value="known"><label for="m7-known" data-state="known">认识</label>
+<input type="radio" id="m7-fuzzy" name="mark-semester" value="fuzzy"><label for="m7-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m7-unknown" name="mark-semester" value="unknown"><label for="m7-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-8" data-word="tuition">
@@ -151,9 +153,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Tuition has risen a lot, so many students look for part-time jobs.</div>
 <div class="note">常考话题：高学费与打工，写作可用。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m8-known" name="mark-tuition" value="known"><label for="m8-known" data-state="known">认识</label>
+<input type="radio" id="m8-fuzzy" name="mark-tuition" value="fuzzy"><label for="m8-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m8-unknown" name="mark-tuition" value="unknown"><label for="m8-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-9" data-word="scholarship">
@@ -162,9 +164,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">He won a scholarship for his excellent grades last year.</div>
 <div class="note">win / get a scholarship 获得奖学金。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m9-known" name="mark-scholarship" value="known"><label for="m9-known" data-state="known">认识</label>
+<input type="radio" id="m9-fuzzy" name="mark-scholarship" value="fuzzy"><label for="m9-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m9-unknown" name="mark-scholarship" value="unknown"><label for="m9-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-10" data-word="dormitory">
@@ -173,9 +175,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Our dormitory is close to the library and the canteen.</div>
 <div class="note">美式口语常说 dorm；in the dormitory 住在宿舍。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m10-known" name="mark-dormitory" value="known"><label for="m10-known" data-state="known">认识</label>
+<input type="radio" id="m10-fuzzy" name="mark-dormitory" value="fuzzy"><label for="m10-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m10-unknown" name="mark-dormitory" value="unknown"><label for="m10-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-11" data-word="laboratory">
@@ -184,9 +186,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Students must wear safety glasses in the chemistry laboratory.</div>
 <div class="note">缩写 lab；do an experiment in the lab 做实验。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m11-known" name="mark-laboratory" value="known"><label for="m11-known" data-state="known">认识</label>
+<input type="radio" id="m11-fuzzy" name="mark-laboratory" value="fuzzy"><label for="m11-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m11-unknown" name="mark-laboratory" value="unknown"><label for="m11-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-12" data-word="graduate">
@@ -195,9 +197,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">She will graduate from university next June.</div>
 <div class="note">graduate from + 学校；a graduate of 某校毕业生。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m12-known" name="mark-graduate" value="known"><label for="m12-known" data-state="known">认识</label>
+<input type="radio" id="m12-fuzzy" name="mark-graduate" value="fuzzy"><label for="m12-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m12-unknown" name="mark-graduate" value="unknown"><label for="m12-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-13" data-word="degree">
@@ -206,9 +208,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">He hopes to get a master&#x27;s degree after four years of study.</div>
 <div class="note">a bachelor&#x27;s degree 学士学位；to some degree 在某种程度上。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m13-known" name="mark-degree" value="known"><label for="m13-known" data-state="known">认识</label>
+<input type="radio" id="m13-fuzzy" name="mark-degree" value="fuzzy"><label for="m13-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m13-unknown" name="mark-degree" value="unknown"><label for="m13-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-14" data-word="thesis">
@@ -217,9 +219,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">She is writing her thesis on how students learn new words.</div>
 <div class="note">复数 theses；write / defend a thesis 写 / 答辩论文。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m14-known" name="mark-thesis" value="known"><label for="m14-known" data-state="known">认识</label>
+<input type="radio" id="m14-fuzzy" name="mark-thesis" value="fuzzy"><label for="m14-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m14-unknown" name="mark-thesis" value="unknown"><label for="m14-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-15" data-word="seminar">
@@ -228,9 +230,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The seminar gives every student a chance to speak.</div>
 <div class="note">小班研讨课；attend a seminar 参加研讨会。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m15-known" name="mark-seminar" value="known"><label for="m15-known" data-state="known">认识</label>
+<input type="radio" id="m15-fuzzy" name="mark-seminar" value="fuzzy"><label for="m15-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m15-unknown" name="mark-seminar" value="unknown"><label for="m15-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-16" data-word="tutorial">
@@ -239,9 +241,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">I booked a tutorial to go over the maths problems I missed.</div>
 <div class="note">与 lecture 大课相对，是小班辅导。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m16-known" name="mark-tutorial" value="known"><label for="m16-known" data-state="known">认识</label>
+<input type="radio" id="m16-fuzzy" name="mark-tutorial" value="fuzzy"><label for="m16-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m16-unknown" name="mark-tutorial" value="unknown"><label for="m16-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-17" data-word="textbook">
@@ -250,9 +252,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The textbook for this course is too expensive for most students.</div>
 <div class="note">buy / borrow a textbook 买 / 借教科书。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m17-known" name="mark-textbook" value="known"><label for="m17-known" data-state="known">认识</label>
+<input type="radio" id="m17-fuzzy" name="mark-textbook" value="fuzzy"><label for="m17-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m17-unknown" name="mark-textbook" value="unknown"><label for="m17-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-18" data-word="examination">
@@ -261,9 +263,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The final examination covers everything we learned this term.</div>
 <div class="note">缩写 exam；take / pass an examination 参加 / 通过考试。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m18-known" name="mark-examination" value="known"><label for="m18-known" data-state="known">认识</label>
+<input type="radio" id="m18-fuzzy" name="mark-examination" value="fuzzy"><label for="m18-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m18-unknown" name="mark-examination" value="unknown"><label for="m18-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-19" data-word="grade">
@@ -272,9 +274,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Her grades improved a lot after she started reviewing every day.</div>
 <div class="note">get good grades 取得好成绩；in the second grade 二年级。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m19-known" name="mark-grade" value="known"><label for="m19-known" data-state="known">认识</label>
+<input type="radio" id="m19-fuzzy" name="mark-grade" value="fuzzy"><label for="m19-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m19-unknown" name="mark-grade" value="unknown"><label for="m19-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-20" data-word="enroll">
@@ -283,9 +285,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">More students enroll in online courses every year.</div>
 <div class="note">enroll in a course 报名一门课；常考被动 be enrolled。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m20-known" name="mark-enroll" value="known"><label for="m20-known" data-state="known">认识</label>
+<input type="radio" id="m20-fuzzy" name="mark-enroll" value="fuzzy"><label for="m20-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m20-unknown" name="mark-enroll" value="unknown"><label for="m20-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-21" data-word="attend">
@@ -294,9 +296,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Please attend every class if you want to pass the course.</div>
 <div class="note">attend a meeting / class 出席会议 / 上课；反义 be absent。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m21-known" name="mark-attend" value="known"><label for="m21-known" data-state="known">认识</label>
+<input type="radio" id="m21-fuzzy" name="mark-attend" value="fuzzy"><label for="m21-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m21-unknown" name="mark-attend" value="unknown"><label for="m21-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-22" data-word="absent">
@@ -305,9 +307,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Two students were absent from class this morning.</div>
 <div class="note">be absent from 缺席；absence n. 缺席。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m22-known" name="mark-absent" value="known"><label for="m22-known" data-state="known">认识</label>
+<input type="radio" id="m22-fuzzy" name="mark-absent" value="fuzzy"><label for="m22-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m22-unknown" name="mark-absent" value="unknown"><label for="m22-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-23" data-word="participate">
@@ -316,9 +318,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">All students are welcome to participate in the English club.</div>
 <div class="note">participate in + 活动；participation n. 参加。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m23-known" name="mark-participate" value="known"><label for="m23-known" data-state="known">认识</label>
+<input type="radio" id="m23-fuzzy" name="mark-participate" value="fuzzy"><label for="m23-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m23-unknown" name="mark-participate" value="unknown"><label for="m23-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-24" data-word="academic">
@@ -327,9 +329,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">He reads one academic article every week to build his vocabulary.</div>
 <div class="note">academic year 学年；academic performance 学业表现。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m24-known" name="mark-academic" value="known"><label for="m24-known" data-state="known">认识</label>
+<input type="radio" id="m24-fuzzy" name="mark-academic" value="fuzzy"><label for="m24-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m24-unknown" name="mark-academic" value="unknown"><label for="m24-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-25" data-word="discipline">
@@ -338,9 +340,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Good discipline helps a class learn faster and argue less.</div>
 <div class="note">既指纪律，也指学科：a new discipline 一门新学科。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m25-known" name="mark-discipline" value="known"><label for="m25-known" data-state="known">认识</label>
+<input type="radio" id="m25-fuzzy" name="mark-discipline" value="fuzzy"><label for="m25-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m25-unknown" name="mark-discipline" value="unknown"><label for="m25-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-26" data-word="library">
@@ -349,9 +351,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">I borrow two books from the library every weekend.</div>
 <div class="note">borrow books from the library 从图书馆借书。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m26-known" name="mark-library" value="known"><label for="m26-known" data-state="known">认识</label>
+<input type="radio" id="m26-fuzzy" name="mark-library" value="fuzzy"><label for="m26-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m26-unknown" name="mark-library" value="unknown"><label for="m26-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-27" data-word="cafeteria">
@@ -360,9 +362,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">The cafeteria is crowded at noon, so we eat a little earlier.</div>
 <div class="note">美式常说 cafeteria；英式常说 canteen。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m27-known" name="mark-cafeteria" value="known"><label for="m27-known" data-state="known">认识</label>
+<input type="radio" id="m27-fuzzy" name="mark-cafeteria" value="fuzzy"><label for="m27-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m27-unknown" name="mark-cafeteria" value="unknown"><label for="m27-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-28" data-word="extracurricular">
@@ -371,9 +373,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">Extracurricular activities help students make friends and relax.</div>
 <div class="note">extracurricular activities 课外活动，写作高频。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m28-known" name="mark-extracurricular" value="known"><label for="m28-known" data-state="known">认识</label>
+<input type="radio" id="m28-fuzzy" name="mark-extracurricular" value="fuzzy"><label for="m28-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m28-unknown" name="mark-extracurricular" value="unknown"><label for="m28-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-29" data-word="compulsory">
@@ -382,9 +384,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">English is a compulsory course for all first-year students.</div>
 <div class="note">compulsory course 必修课；反义 optional 选修的。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m29-known" name="mark-compulsory" value="known"><label for="m29-known" data-state="known">认识</label>
+<input type="radio" id="m29-fuzzy" name="mark-compulsory" value="fuzzy"><label for="m29-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m29-unknown" name="mark-compulsory" value="unknown"><label for="m29-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
  <article class="word" id="w-30" data-word="optional">
@@ -393,9 +395,9 @@ textarea{width:100%;min-height:140px;font:inherit;padding:10px;border:1px solid 
 <div class="ex">This class is optional, but most students still choose to take it.</div>
 <div class="note">an optional course 选修课；optional 后常接 to do。</div>
 <div class="mark">
-<button type="button" data-state="known">认识</button>
-<button type="button" data-state="fuzzy">模糊</button>
-<button type="button" data-state="unknown">不认识</button>
+<input type="radio" id="m30-known" name="mark-optional" value="known"><label for="m30-known" data-state="known">认识</label>
+<input type="radio" id="m30-fuzzy" name="mark-optional" value="fuzzy"><label for="m30-fuzzy" data-state="fuzzy">模糊</label>
+<input type="radio" id="m30-unknown" name="mark-optional" value="unknown"><label for="m30-unknown" data-state="unknown">不认识</label>
 </div>
 </article>
 <div class="card">
@@ -419,8 +421,8 @@ document.querySelectorAll('.word').forEach(function(el){
 var w = el.getAttribute('data-word');
 var m = marks[w];
 el.classList.toggle('done',!!m);
-el.querySelectorAll('.mark button').forEach(function(b){
-b.classList.toggle('on-'+b.getAttribute('data-state'), m === b.getAttribute('data-state'));
+el.querySelectorAll('.mark input[type="radio"]').forEach(function(r){
+r.checked = (m === r.value);
 });
 if(m==='known') known++;
 else if(m==='fuzzy') fuzzy++;
@@ -431,16 +433,35 @@ document.getElementById('c-done').textContent = done;
 document.getElementById('c-known').textContent = known;
 document.getElementById('c-fuzzy').textContent = fuzzy;
 document.getElementById('c-unknown').textContent = unknown;
-document.getElementById('bar').style.width = (done/words.length*100) + '%';
+var barEl = document.getElementById('bar');
+if(barEl){ barEl.style.width = (done/words.length*100) + '%'; }
 if(typeof updateMail === 'function'){ updateMail(); }
 }
-document.querySelectorAll('.word.mark button').forEach(function(b){
-b.addEventListener('click', function(){
-var card = b.closest('.word');
+document.querySelectorAll('.word input[type="radio"]').forEach(function(r){
+r.addEventListener('change', function(){
+var card = r.closest('.word');
 var w = card.getAttribute('data-word');
-var s = b.getAttribute('data-state');
-if(marks[w] === s){ delete marks[w];} else { marks[w] = s;}
+marks[w] = r.value;
 save(); render();
+});
+});
+document.querySelectorAll('.mark label').forEach(function(lab){
+function arm(){
+var inp = document.getElementById(lab.getAttribute('for'));
+lab._wasChecked = !!(inp && inp.checked);
+}
+lab.addEventListener('mousedown', arm);
+lab.addEventListener('touchstart', arm, {passive:true});
+lab.addEventListener('click', function(e){
+if(lab._wasChecked){
+e.preventDefault();
+var inp = document.getElementById(lab.getAttribute('for'));
+if(inp){ inp.checked = false; }
+var card = lab.closest('.word');
+var w = card.getAttribute('data-word');
+delete marks[w];
+save(); render();
+}
 });
 });
 function summaryText(){
